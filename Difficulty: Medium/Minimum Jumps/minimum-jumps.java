@@ -1,22 +1,33 @@
 //{ Driver Code Starts
+// Initial Template for Java
+
 import java.io.*;
-import java.lang.*;
 import java.util.*;
 
-class GFG {
-    public static void main(String[] args) throws IOException {
+public class Main {
 
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int t = Integer.parseInt(br.readLine());
-
+        int t;
+        t = Integer.parseInt(br.readLine());
         while (t-- > 0) {
-            int size = Integer.parseInt(br.readLine());
-            String[] arrStr = ((String)br.readLine()).split("\\s+");
-            int[] arr = new int[size];
-            for (int i = 0; i < size; i++) {
-                arr[i] = Integer.parseInt(arrStr[i]);
+            String line = br.readLine();
+            String[] tokens = line.split(" ");
+
+            // Create an ArrayList to store the integers
+            ArrayList<Integer> array = new ArrayList<>();
+
+            // Parse the tokens into integers and add to the array
+            for (String token : tokens) {
+                array.add(Integer.parseInt(token));
             }
-            System.out.println(new Solution().minJumps(arr, size));
+
+            int[] arr = new int[array.size()];
+            int idx = 0;
+            for (int i : array) arr[idx++] = i;
+
+            System.out.println(new Solution().minJumps(arr));
+            // System.out.println("~");
         }
     }
 }
@@ -24,19 +35,41 @@ class GFG {
 // } Driver Code Ends
 
 
+
+
 class Solution {
-    static int minJumps(int[] arr, int n) {
-        // your code here
-        if(n<=1) return 0;
-        int jump =0, far=0, cur=0;
-        for(int i=0;i<n;i++){
-            far = Math.max(far, arr[i]+i);
-            if(i==cur){
-                cur=far;
-                jump++;
-                if(far>=n-1) return jump;
+    static int minJumps(int[] arr) {
+        // code here
+        // int i=0;
+        // int maxI=0;
+        // for(int j:arr)
+        // {
+        //     if(j<=maxI)
+        //     return false;
+            
+        //     maxI=Math.max(maxI,i+j);
+        //     i++;
+        // }
+        // return true;
+        
+        int l=0;
+        int r=0;
+        int j=0;
+        int n=arr.length;
+        // int max=Integer.MIN_VALUE;
+        while (r<n-1)
+        {
+            int farthest=0;
+            for(int i=l;i<=r;i++)
+            {
+                farthest=Math.max(farthest,i+arr[i]);
             }
+            if(farthest<=r)
+            return -1;
+            l=r+1;
+            r=farthest;
+            j++;
         }
-        return -1;
+        return j;
     }
 }
