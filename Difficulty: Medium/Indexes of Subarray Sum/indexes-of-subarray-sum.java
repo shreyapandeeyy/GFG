@@ -38,30 +38,30 @@ class Main {
 
 class Solution {
     static ArrayList<Integer> subarraySum(int[] arr, int target) {
-       ArrayList<Integer> list=new ArrayList<>();
-       int i=0;
-       int j=0;
-       int sum=0;
-       while(j<arr.length){
-            sum=sum+arr[j];
-           
-            
-            while(sum>target){
-               sum=sum-arr[i];
-               i++;
-              //  System.out.println(i+"-3-"+j+"--"+sum);
-           }
-           if(sum==target){
-               list.add(i+1);
-               list.add(j+1);
-               // System.out.println(i+"-2-"+j);
-               return list;
-               
-           }
-           j++;
-       }
-       if(list.size()==0){
-           list.add(-1);}
-       return list;
+        int i = 0;
+        int j = 0;
+        int sum = 0;
+        int flag = 0;
+        while(j < arr.length){
+            sum += arr[j];
+            while(sum > target){
+                sum -= arr[i];
+                i++;
+            }
+            if(sum == target){
+                flag = 1;
+                break;
+            }
+            j++;
+        }
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(flag == 0){
+            ans.add(-1);
+            return ans;
+        }
+        ans.add(i+1);
+        ans.add(j+1);
+        return ans;
     }
 }
