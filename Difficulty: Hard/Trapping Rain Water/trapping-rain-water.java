@@ -10,7 +10,7 @@ class Sorting {
             String[] str = (br.readLine()).trim().split(" ");
             int arr[] = new int[str.length];
             for (int i = 0; i < str.length; i++) arr[i] = Integer.parseInt(str[i]);
-            System.out.println(new Solution().trappingWater(arr));
+            System.out.println(new Solution().maxWater(arr));
             System.out.println("~");
         }
     }
@@ -21,23 +21,27 @@ class Sorting {
 
 
 class Solution {
-    public int trappingWater(int arr[]) {
+    public int maxWater(int arr[]) {
         // code here
-        int res=0;
-        int[] lmax=new int[arr.length];
-        int[] rmax=new int[arr.length];
-        lmax[0]=arr[0];
-        for(int i=1;i<lmax.length;i++){
-            lmax[i]=Math.max(arr[i],lmax[i-1]);
-        }
-        rmax[rmax.length-1]=arr[arr.length-1];
-        for(int i=arr.length-2;i>=0;i--){
-            rmax[i]=Math.max(arr[i],rmax[i+1]);
-        }
+        int lmax=arr[0],rmax=arr[arr.length-1];
+        int i=0,j=arr.length-1,sum=0;
         
-        for(int i=1;i<arr.length-1;i++){
-            res=res+(Math.min(rmax[i],lmax[i])-arr[i]);
+        while(i<j)
+        {
+            if(arr[i]<=arr[j])
+            {
+                lmax=Math.max(lmax,arr[i]);
+                sum+= lmax-arr[i];
+                i++;
+            }
+            else
+            {
+                rmax=Math.max(rmax,arr[j]);
+                sum+=rmax-arr[j];
+                j--;
+            }
         }
-        return res;
+        return sum;
+        
     }
 }
