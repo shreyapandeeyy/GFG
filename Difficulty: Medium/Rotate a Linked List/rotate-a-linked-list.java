@@ -44,31 +44,47 @@ class Node{
 
 class Solution {
     public Node rotate(Node head, int k) {
-        // add code here
-        if(k==0||head==null){
-            return head;
-        }
+        
+        if(head == null || k == 0) return head;
+        
         Node tail = head;
-        int len =1;
-        while(tail.next!=null){
-            tail=tail.next;
+        int len = 1;
+        
+        while(tail.next != null) {
+            tail = tail.next;
             len++;
         }
         
+        if(k % len == 0) return head;
+        
         k = k%len;
         
-        if(k==0){
-            return head;
-        }
-        tail.next=head;
-        for(int i=0;i<k;i++){
-            tail=tail.next;
-            
-        }
-        head=tail.next;
-        tail.next=null;
+        tail.next = head;
+        
+        Node newLastNode = findKthNode(head, k);
+        
+        head = newLastNode.next;
+        newLastNode.next = null;
+        
         return head;
+        
     }
+    
+    private Node findKthNode(Node head, int k) {
+        
+        Node temp = head;
+        int cnt = 1;
+        
+        while(temp != null) {
+            if(cnt == k) return temp;
+            temp = temp.next;
+            cnt++;
+        }
+        
+        return temp;
+        
+    }
+    
 }
 
 
